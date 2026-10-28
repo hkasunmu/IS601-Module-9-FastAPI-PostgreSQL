@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store
+.vscode/
+*.pdf
+*.docx
+README.md
+REFLECTION_TEMPLATE.md
+SCREENSHOT_CHECKLIST.md

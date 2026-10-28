@@ -1,0 +1,15 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+.venv
+.env
+*.zip
+README.md
+SCREENSHOT_CHECKLIST.md
+REFLECTION_TEMPLATE.md
+sql
+pgadmin
+.env
+.git
+__pycache__/
