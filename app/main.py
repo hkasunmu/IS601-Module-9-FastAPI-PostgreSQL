@@ -5,9 +5,9 @@ import psycopg
 from psycopg.rows import dict_row
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-
+from app.users import router as users_router
 app = FastAPI(title="Module 9 FastAPI Calculator", version="1.0.0")
-
+app.include_router(users_router)
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 
@@ -97,3 +97,4 @@ def calculate(data: CalculationInput):
         raise HTTPException(status_code=404, detail="That user_id does not exist")
     except psycopg.errors.UndefinedTable:
         raise HTTPException(status_code=404, detail="Create tables in pgAdmin first")
+from app.users import router as users_router
