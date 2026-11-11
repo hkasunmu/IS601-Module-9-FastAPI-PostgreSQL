@@ -92,3 +92,48 @@ docker compose down
 **Security:** The sample usernames and passwords are only for this local coursework demonstration. Never use these credentials for a production or publicly exposed application.
 
 PostgreSQL is published on host port 5433 to reduce conflict with locally installed PostgreSQL; inside Docker, pgAdmin and FastAPI still connect to `db:5432`.
+
+## Module 10: Secure User Model and CI/CD
+
+This module extends the existing FastAPI calculator with secure user creation, PostgreSQL storage, Pydantic input/output validation, Argon2 password hashing, automated tests, a GitHub Actions security scan, and Docker Hub deployment.
+
+### Requirements
+
+- Docker Desktop and Docker Compose
+- A `.env` file in the project root containing `POSTGRES_PASSWORD=<your-local-password>` (do not commit your `.env` file)
+
+### Run the application locally
+
+From the project root:
+
+```powershell
+docker compose up -d --build
+```
+
+Then open `http://localhost:8000/docs` to try the FastAPI endpoints. Use `POST /users` to create a user; the response should not include a password or password hash.
+
+### Run the tests
+
+With the containers running:
+
+```powershell
+docker compose exec app python -m pytest -v
+```
+
+The Module 10 test suite includes unit tests for password hashing and Pydantic validation plus PostgreSQL integration tests for user creation, uniqueness, and lookup.
+
+### Docker Hub
+
+Docker image: https://hub.docker.com/r/hkasunmu/is601-fastapi-module10
+
+Pull the published image:
+
+```powershell
+docker pull hkasunmu/is601-fastapi-module10:latest
+```
+
+The running API requires a PostgreSQL database and an appropriate `DATABASE_URL` environment variable; the repository's Docker Compose setup supplies this for local development. Pulling the image alone does not start a configured database.
+
+### CI/CD
+
+The `.github/workflows/module10.yml` workflow runs automated tests against PostgreSQL, builds the Docker image, scans it with Trivy, and pushes the image to Docker Hub after successful checks. Docker Hub credentials are stored in GitHub Actions secrets/variables, not in the repository.
